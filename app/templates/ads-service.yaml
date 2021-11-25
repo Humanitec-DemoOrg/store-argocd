@@ -5,16 +5,19 @@ metadata:
   name: ads-service
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: eu.gcr.io/humanitec-demo-1/store-ads-service
+    argocd-image-updater.argoproj.io/image-list: ads-service=eu.gcr.io/humanitec-demo-1/store-ads-service
+    argocd-image-updater.argoproj.io/ads-service.ignore-tags: latest
     argocd-image-updater.argoproj.io/write-back-method: git
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  destination:
-    namespace: {{ .Values.spec.destination.namespace }}
-    server: {{ .Values.spec.destination.server }}
   source:
     path: ads-service
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+  destination:
+    namespace: {{ .Values.spec.destination.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  syncPolicy:
+    automated: {}
