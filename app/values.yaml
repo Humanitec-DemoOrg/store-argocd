@@ -1,0 +1,7 @@
+spec:
+  destination:
+    namespace: store
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/Humanitec-DemoOrg/store-argocd
+    targetRevision: v0.1

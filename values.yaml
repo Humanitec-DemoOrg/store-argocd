@@ -1,8 +1,0 @@
-spec:
-  destination:
-    namespace: store
-    server: https://kubernetes.default.svc
-  services:
-    ads-service:
-      revision: 0.1.0
-      source: https://github.com/Humanitec-DemoOrg/store-ads-service

@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  name: eu.gcr.io/humanitec-demo-1/store-ads-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  annotations: {}
+  path: /
+  hosts:
+    - ads-service.local
+  tls: []
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
