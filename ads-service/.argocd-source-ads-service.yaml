@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: eu.gcr.io/humanitec-demo-1/store-ads-service
+    forcestring: true
+  - name: image.tag
+    value: 0.1.2
+    forcestring: true
