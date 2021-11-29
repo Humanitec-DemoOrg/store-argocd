@@ -1,0 +1,10 @@
+redis:
+  architecture: standalone
+  auth:
+    password: Humanitec
+  master:
+    service:
+      type: NodePort
+  replica:
+    service:
+      type: NodePort
