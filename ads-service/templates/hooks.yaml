@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: terraform-sync-
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  template:
+    spec:
+      containers:
+      - name: terraform
+        image: eu.gcr.io/humanitec-demo-1/terraform:0.1.0
+        imagePullPolicy: Always
+        env:
+        - name: TF_VAR_DB_NAME
+          value: "{{ .Values.db.name }}"
+        - name: TF_VAR_DB_USER
+          value: "{{ .Values.db.user }}"
+        - name: TF_VAR_DB_PASSWORD
+          value: "{{ .Values.db.password }}"
+        command: ["/bin/sh","-c"]
+        args:
+        - git clone -b v{{ .Chart.AppVersion }} --single-branch https://github.com/Humanitec-DemoOrg/store-argocd.git ./src &&
+          cp ./src/{{ template "service.name" . }}/resources/*.tf ./ &&
+          terraform init -input=false &&
+          terraform apply -input=false
+      restartPolicy: Never
+  backoffLimit: 2

@@ -17,7 +17,7 @@ ingress:
     - ads-service.local
   tls: []
 
-resources: {}
-nodeSelector: {}
-tolerations: []
-affinity: {}
+db:
+  name: ads-service-db
+  user: ads-service
+  password: Humanitec

@@ -21,32 +21,31 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /alive
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /alive
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+        env:
+        - name: PORT
+          value: "8080"
+        - name: SERVICE_NAME
+          value: "{{ template "service.name" . }}"        
+        - name: SERVICE_SECRET
+          value: "{{ template "service.name" . }}-secret"
+        - name: DATABASE_NAME
+          value: "{{ .Values.db.name }}"
+        - name: DATABASE_USER
+          value: "{{ .Values.db.user }}"
+        - name: DATABASE_PASSWORD
+          value: "{{ .Values.db.password }}"

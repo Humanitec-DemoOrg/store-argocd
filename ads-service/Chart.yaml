@@ -1,6 +1,6 @@
 apiVersion: v2
 name: ads-service
-description: Demo Store ads-service microservice
+description: ads-service microservice
 
 type: application
 version: 0.1.1
